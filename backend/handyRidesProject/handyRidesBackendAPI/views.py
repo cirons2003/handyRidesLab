@@ -1,0 +1,24 @@
+from rest_framework import generics 
+from .models import Person 
+from .serializers import PersonSerializer
+from django.http import HttpResponse
+from django.db.models import Q
+
+class PersonCreateAPIView(generics.ListCreateAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+
+def index(request):
+    return HttpResponse("test")
+
+class PersonSearch(generics.ListAPIView):
+    serializer_class = PersonSerializer
+
+    def get_queryset(self):
+        city_query = self.request.query_params.get('city','')
+        state_query = self.request.query_params.get('state','')
+        name_query = self.request.query_params.get('name','')
+
+        return Person.objects.filter(Q(city__icontains = city_query) & Q(state__icontains = state_query) & Q(name__icontains = name_query))
+
+
