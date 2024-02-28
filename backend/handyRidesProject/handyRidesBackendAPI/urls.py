@@ -5,5 +5,6 @@ from . import views
 urlpatterns = [
     path('people', views.PersonCreateAPIView.as_view(), name = "people"),
     path('', views.index, name = 'index'),
-    path('people/search', views.PersonSearch.as_view(), name = "city seach")
+    path('people/search', views.PersonSearch.as_view(), name = "city seach"),
+    path('chat', views.chat, name = 'chat')
 ]
